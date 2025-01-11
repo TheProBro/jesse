@@ -5,7 +5,7 @@ for step in chain.stream(
     {
         "messages": [
             HumanMessage(
-                content=""
+                content="create a file called test.txt with the content 'Hello, World!'"
             )
         ]
     }

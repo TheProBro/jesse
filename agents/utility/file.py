@@ -1,6 +1,11 @@
 import os
 from langchain_core.tools import StructuredTool
 
+# Ensure the /dump folder exists
+dump_folder = "dump"
+if not os.path.exists(dump_folder):
+    os.makedirs(dump_folder)
+
 def create_file(file_path: str, content: str = "") -> str:
     """
     Creates a file at the specified path with the given content.
@@ -12,7 +17,7 @@ def create_file(file_path: str, content: str = "") -> str:
     Returns:
         str: A message indicating whether the file was created successfully or not.
     """
-    file_path = "/dump/" + file_path
+    file_path = "dump/" + file_path
     with open(file_path, "w") as file:
         file.write(content)
     return f"File created: {file_path}"
@@ -39,7 +44,7 @@ def read_file(file_path: str) -> str:
     Returns:
         str: The content of the file, or an error message if the file does not exist.
     """
-    file_path = "/dump/" + file_path
+    file_path = "dump/" + file_path
     if not os.path.exists(file_path):
         return f"Error: File does not exist: {file_path}"
     with open(file_path, "r") as file:
@@ -67,7 +72,7 @@ def delete_file(file_path: str) -> str:
     Returns:
         str: A message indicating whether the file was deleted successfully or not.
     """
-    file_path = "/dump/" + file_path
+    file_path = "dump/" + file_path
     if not os.path.exists(file_path):
         return f"Error: File does not exist: {file_path}"
     os.remove(file_path)
