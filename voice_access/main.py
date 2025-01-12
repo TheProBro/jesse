@@ -2,6 +2,8 @@ import pyttsx3
 import pyaudio
 import wave
 import os
+import time
+import pyautogui
 
 def text_to_audio(text, output_file="output.wav"):
     """
@@ -53,16 +55,29 @@ def stream_audio_to_virtual_cable(wave_file, virtual_device_name="CABLE Input"):
     stream.close()
     p.terminate()
 
+def take_screenshot(filename="screenshot.png"):
+    """
+    Take a screenshot and save it as a PNG file.
+    """
+    screenshot = pyautogui.screenshot()
+    screenshot.save(filename)
+    print(f"Screenshot saved as {filename}")
+
 def handle_text_command(command):
     """
-    Handle a text command by converting it to speech and routing it to the virtual microphone.
+    Handle a text command by converting it to speech, routing it to the virtual microphone,
+    and taking a screenshot.
     """
     try:
         # Convert text command to audio
         text_to_audio(command)
-
+        time.sleep(5)
         # Stream audio to VB-Audio Virtual Cable
         stream_audio_to_virtual_cable("output.wav")
+
+        # Take and save a screenshot
+        screenshot_filename = f"screenshot_{int(time.time())}.png"
+        take_screenshot(screenshot_filename)
 
         print(f"Command '{command}' has been sent to the virtual microphone.")
     except Exception as e:
@@ -70,12 +85,25 @@ def handle_text_command(command):
 
 # Main loop to accept user commands
 if __name__ == "__main__":
-    print("Enter text commands to interact with Windows Voice Access. Type 'exit' to quit.")
-    while True:
-        command = input("Command: ")
+    # Predefined sequence of commands
+    commands = [
+        "voice access wake up",
+        "Open Spotify",  
+        "Click on what do you want to play",
+        "Little things give you away",  
+        "click on play",
+        "Increase volume",  
+        "Decrease volume",
+        "Exit"
+    ]
+
+    # Execute the sequence of commands
+    print("Executing sequence of commands...")
+    for command in commands:
         if command.lower() == "exit":
             break
         handle_text_command(command)
+        
 
     # Cleanup temporary audio file
     if os.path.exists("output.wav"):

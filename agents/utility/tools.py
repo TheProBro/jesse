@@ -1,6 +1,6 @@
 from .file import create_file_tool, read_file_tool, delete_file_tool
 from .application import launch_application_tool, close_application_tool
-from .system import set_volume_tool
+from .system import set_volume_tool, run_python_code_tool
 from langchain_community.tools.tavily_search import TavilySearchResults
 from .math_tools import get_math_tool
 from langchain_groq import ChatGroq
@@ -31,4 +31,4 @@ search = TavilySearchResults(
     description='tavily_search_results_json(query="the search query") - a search engine.',
 )
 
-tools = [search, calculate, create_file_tool, read_file_tool, delete_file_tool, set_volume_tool, launch_application_tool, close_application_tool]
+tools = [search, calculate, create_file_tool, read_file_tool, delete_file_tool, set_volume_tool, launch_application_tool, close_application_tool, run_python_code_tool]
