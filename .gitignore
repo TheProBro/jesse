@@ -1,3 +1,5 @@
 .env
 dump
 jesse_env
+real_time_translation/model
+__pycache__/
