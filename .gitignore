@@ -3,3 +3,4 @@ dump
 jesse_env
 real_time_translation/model
 __pycache__/
+agents/user_profiles.json
