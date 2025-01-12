@@ -11,6 +11,36 @@ import speech_recognition as sr
 import pyaudio
 import time
 
+from gtts import gTTS
+import pygame
+import os
+
+def speech_to_text(text):
+    # Text you want to convert to speech
+    # text = "Close chrome"
+
+    # Create a gTTS object
+    tts = gTTS(text=text, lang='en')
+
+    # Save the generated speech to an audio file
+    audio_file = "test_speech.mp3"
+    tts.save(audio_file)
+
+    # Initialize pygame mixer to play the audio
+    pygame.mixer.init()
+
+    # Load and play the audio file
+    pygame.mixer.music.load(audio_file)
+    pygame.mixer.music.play()
+
+    # Wait for the audio to finish playing
+    while pygame.mixer.music.get_busy():  # Check if audio is still playing
+        pygame.time.Clock().tick(10)
+
+    # Optionally, remove the audio file after playback
+    os.remove(audio_file)
+
+
 
 def producer():
     recognizer = sr.Recognizer()
@@ -35,6 +65,8 @@ def producer():
             print("\nStopping listening.")
             return
 
+# def text_to_speech():
+
 
 def consumer():
     while True:
@@ -58,7 +90,7 @@ def consumer():
                 print(step)
 
             # Print the last part of the result
-            print(step["join"]["messages"][-1].content)
+            speech_to_text(step["join"]["messages"][-1].content)
 
             print(recognized_text)
         except queue.Empty:
